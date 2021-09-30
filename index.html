@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/table-assets-history.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <title>mAssets</title>
+</head>
+<body>
+
+    <div id="app"> 
+        <v-app>
+            <v-main>
+                <v-container fluid>
+                    <v-row>
+                        <v-col cols="4">
+                            <v-row>
+                                <v-col cols="6">Ejecutar cada </v-col>
+                                <v-col cols="6"> 
+                                    <v-text-field
+                                    label="Minutos"
+                                    v-model="minutes"
+                                    type="number"
+                                    outlined
+                                  ></v-text-field>
+                                </v-col>
+                            </v-row>
+                            <v-row>
+                                <v-col cols="12">
+                                    <v-btn
+                                        :color="interval ? 'success': 'primary'"
+                                        block
+                                        @click="initializeInterval"
+                                        elevation="7">
+                                        <v-icon>mdi-{{ interval ?'update':'clock'}}</v-icon> {{ interval ?'Actualizar':'Iniciar'}} 
+                                    </v-btn>
+
+
+                                </v-col>
+                            </v-row>  
+                        </v-col>
+                        
+                    </v-row>
+                    <v-row>
+                        <v-col cols="6">
+                            <table-m-assets
+                            @update-assets="mAssetsToshow = $event"
+                            :loader="loader.tableAll"
+                            :last-update="lastUpdate"
+                            :assets="mAssets"/>
+                        </v-col>
+                        <v-col cols="6">
+                            <asset-short-history 
+                            :assets="mAssetsFiltered" 
+                            :next-update="nextUpdate"/>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-main>
+        </v-app>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js" defer></script>
+    <script src="./js/main.js" type="module" defer></script>
+    <script src="./js/moment.min.js"></script>
+    <script src="./js/papaparse.min.js"></script>
+    <script src="./js/download.js"></script>   
+</body>
+</html>
