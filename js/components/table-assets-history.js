@@ -55,7 +55,12 @@ const mAssetsShortHistory = Vue.component(
           const array = [Object.keys(data[0])].concat(data)
 
           return array.map(it => {
-            return Object.values(it).toString()
+            const values = Object.values(it).map(v => {
+              if (typeof v === 'string')
+                  return `"${v}"`
+              return v
+            })
+            return values.toString()
           }).join('\n')
 
         },
